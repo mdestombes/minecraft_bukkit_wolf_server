@@ -25,10 +25,10 @@ The docker image manage this difference.
 ---
 
 ## Features
- - Easy install
- - Easy port configuration
- - Easy access to Minecraft config file
- - `Docker stop` is a clean stop
+- Easy install
+- Easy port configuration
+- Easy access to Minecraft config file
+- `Docker stop` is a clean stop
 
 ---
 
@@ -169,9 +169,9 @@ directory when starting the container by using the `-v` option.
 ### Stopping container
 
 To stop the server:
-+ More than 70 should be needed at first running. 90 seconds set to internal
+- More than 70 should be needed at first running. 90 seconds set to internal
 stop running process, to avoid lost data.
-+ More than 40 should be needed at other running. 60 seconds set to internal
+- More than 40 should be needed at other running. 60 seconds set to internal
 stop running process, to avoid lost data.
 
 /!\ The default timeout of command `stop` from docker command is 10 second.
@@ -211,15 +211,15 @@ To know how to use the plugin, refer to the original plugin documentation as:
 ---
 
 ## Important point in available volumes
-+ __/minecraft/data__: Working data directory wich contains:
-  + /minecraft/data/logs: Logs directory
-  + /minecraft/data/plugin: Plugins directory
-  + /minecraft/data/server.properties: Minecraft server properties
+- __/minecraft/data__: Working data directory wich contains:
+  - /minecraft/data/logs: Logs directory
+  - /minecraft/data/plugin: Plugins directory
+  - /minecraft/data/server.properties: Minecraft server properties
 
 ---
 
 ## Expose
-+ Port: __SERVER_PORT__: Minecraft steam port (default: 25565)
+- Port: __SERVER_PORT__: Minecraft steam port (default: 25565)
 
 ---
 
