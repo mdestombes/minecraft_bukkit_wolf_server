@@ -151,9 +151,14 @@ function waiting_available_server {
 if [[ ! -f /minecraft/data/eula.txt ]]; then
 
   # Copy minecraft binaries
+  echo -e "\n************************************************************************"
+  echo "* Copy specific Minecraft binaries..."
+  echo "************************************************************************"
   if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
+    echo "Werewolf Squeezie"
     cp -f /minecraft/downloads/bin/werewolf/*.jar /minecraft/bin
   else
+    echo "Werewolf UHC"
     cp -f /minecraft/downloads/bin/werewolf_uhc/*.jar /minecraft/bin
   fi
 
