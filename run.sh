@@ -20,7 +20,7 @@ function stop {
   echo "* Send stop to Minecraft server"
   echo "*************************************************"
 
-  # Stoping minecraft server
+  # Stopping minecraft server
   tmux send-keys -t minecraft "stop" C-m
 
   echo -e "\n*************************************************"
@@ -138,9 +138,9 @@ if [[ ! -f /minecraft/data/eula.txt ]]; then
   FIRST_LAUNCH=1
 
   # Check Minecraft license
-  if [[ "$EULA" != "" ]]; then
+  if [[ "${EULA}" != "" ]]; then
     echo "# Generated via Docker on $(date)" > /minecraft/data/eula.txt
-    echo "eula=$EULA" >> /minecraft/data/eula.txt
+    echo "eula=${EULA}" >> /minecraft/data/eula.txt
   else
     echo ""
     echo "Please accept the Minecraft EULA at"
@@ -152,7 +152,7 @@ if [[ ! -f /minecraft/data/eula.txt ]]; then
     exit 1
   fi
 else
-  FIRT_LAUNCH=0
+  FIRST_LAUNCH=0
 fi
 
 # Check server configuration
