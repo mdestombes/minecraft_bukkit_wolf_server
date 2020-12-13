@@ -16,23 +16,23 @@ export TERM=linux
 # Stop management
 function stop {
 
-  echo -e "\n*************************************************"
+  echo -e "\n************************************************************************"
   echo "* Send stop to Minecraft server"
-  echo "*************************************************"
+  echo "************************************************************************"
 
   # Stopping minecraft server
   tmux send-keys -t minecraft "stop" C-m
 
   if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
-    echo -e "\n*************************************************"
+    echo -e "\n************************************************************************"
     echo "* Minecraft server with Werewolf Squeezie stopping"
-    echo "*************************************************"
+    echo "************************************************************************"
     sleep 10
 
   else
-    echo -e "\n*************************************************"
+    echo -e "\n************************************************************************"
     echo "* Minecraft server with Werewolf UHC stopping"
-    echo "*************************************************"
+    echo "************************************************************************"
 
     if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
       sleep 90
@@ -44,9 +44,9 @@ function stop {
 
   fi
 
-  echo -e "\n*************************************************"
+  echo -e "\n************************************************************************"
   echo "* Minecraft server stopped"
-  echo "*************************************************"
+  echo "************************************************************************"
 
   exit
 }
@@ -56,9 +56,9 @@ function init_plugins {
 
   # Copy plugins if selected mod active and not already copied
   if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
-    echo -e "\n*************************************************"
+    echo -e "\n************************************************************************"
     echo "* Werewolf Squeezie management..."
-    echo "*************************************************"
+    echo "************************************************************************"
 
     if ! [[ ${FIRST_LAUNCH} -eq 1 || -f /minecraft/data/plugin_installed ]]; then
       echo "Copy plugins..."
@@ -71,9 +71,9 @@ function init_plugins {
     fi
 
   else
-    echo -e "\n*************************************************"
+    echo -e "\n************************************************************************"
     echo "* Werewolf UHC management..."
-    echo "*************************************************"
+    echo "************************************************************************"
 
     if ! [[ -f /minecraft/data/plugin_installed ]]; then
       echo "Copy plugins..."
@@ -94,9 +94,9 @@ function init_plugins {
 function waiting_available_server {
 
   if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
-    echo -e "\n*************************************************"
+    echo -e "\n************************************************************************"
     echo "* Launching Minecraft server with Werewolf Squeezie..."
-    echo "*************************************************"
+    echo "************************************************************************"
 
     if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
       echo "Waiting for first initialization..."
@@ -119,9 +119,9 @@ function waiting_available_server {
     fi
 
   else
-    echo -e "\n*************************************************"
+    echo -e "\n************************************************************************"
     echo "* Launching Minecraft server with Werewolf UHC..."
-    echo "*************************************************"
+    echo "************************************************************************"
 
     if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
       echo "Waiting for first initialization..."
@@ -203,8 +203,8 @@ read < /tmp/FIFO &
 # Waiting procedure
 waiting_available_server
 
-echo -e "\n*************************************************"
+echo -e "\n************************************************************************"
 echo "* Minecraft server operational..."
-echo "*************************************************"
+echo "************************************************************************"
 
 wait
