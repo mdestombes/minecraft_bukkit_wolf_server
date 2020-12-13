@@ -241,7 +241,6 @@ To know how to use the plugin, refer to the original plugin documentation as:
 |          | -> Minecraft 1.16.4                                                |
 |          | -> werewolf-uhc 1.6.1                                              |
 |          | -> statistiks-for-werewolf-uhc 1.0                                 |
-|          |                                                                    |
 | `2.0`    | -> Minecraft binaries management (2 distinct revision)             |
 |          | -> Multiple plugins management (Loup Garou Squeezie, werewolf-uhc) |
 |          |                                                                    |
