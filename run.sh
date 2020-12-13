@@ -45,39 +45,94 @@ function stop {
 # Init plugins configuration
 function init_plugins {
 
-  if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
-    echo -e "\n*************************************************"
-    echo "* Specific configuration of Minecraft server..."
-    echo "*************************************************"
-    echo "Waiting for first initialization..."
-    sleep 60
+  # Copy plugins if selected mod active and not already copied
+  if ! [[ ${WEREWOLF_MODE} -eq 1 ||
+          -f /minecraft/data/plugin_installed ]]; then
+    mkdir /minecraft/data/plugins
+    cp -f /minecraft/downloads/plugins/werewolf_uhc/*.jar /minecraft/data/plugins
+    touch /minecraft/data/plugin_installed
+  fi
 
-    while [[ `cat /minecraft/data/logs/latest.log | grep "Can't keep up!"` == "" ]]; do
-      echo "...Waiting more..."
-      sleep 10
-    done
+}
+
+# Waiting procedure
+function waiting_available_server {
+
+  if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
+
+    if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
+      echo -e "\n*************************************************"
+      echo "* Specific configuration of Minecraft server with Werewolf Squeezie..."
+      echo "*************************************************"
+      echo "Waiting for first initialization..."
+      sleep 40
+
+      while [[ `cat /minecraft/data/logs/latest.log | grep "For help, type \"help\""` == "" ]]; do
+        echo "...Waiting more..."
+        sleep 10
+      done
+
+    else
+      # Copy plugins if not already copied
+      if ! [[ -f /minecraft/data/plugin_installed ]]; then
+        cp -f /minecraft/downloads/plugins/werewolf/*.jar /minecraft/data/plugins
+        touch /minecraft/data/plugin_installed
+      fi
+
+      echo -e "\n*************************************************"
+      echo "* Launching Minecraft server with Werewolf Squeezie..."
+      echo "*************************************************"
+      echo "Waiting for initialization..."
+      sleep 40
+
+      while [[ `cat /minecraft/data/logs/latest.log | grep "For help, type \"help\""` == "" ]]; do
+        echo "...Waiting more..."
+        sleep 10
+      done
+
+    fi
 
   else
-    echo -e "\n*************************************************"
-    echo "* Launching Minecraft server..."
-    echo "*************************************************"
-    echo "Waiting for initialization..."
-    sleep 60
 
-    while [[ `cat /minecraft/data/logs/latest.log | grep "Can't keep up!"` == "" ]]; do
-      echo "...Waiting more..."
-      sleep 10
-    done
+    if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
+      echo -e "\n*************************************************"
+      echo "* Specific configuration of Minecraft server with Werewolf UHC..."
+      echo "*************************************************"
+      echo "Waiting for first initialization..."
+      sleep 60
+
+      while [[ `cat /minecraft/data/logs/latest.log | grep "Can't keep up!"` == "" ]]; do
+        echo "...Waiting more..."
+        sleep 10
+      done
+
+    else
+      echo -e "\n*************************************************"
+      echo "* Launching Minecraft server with Werewolf UHC..."
+      echo "*************************************************"
+      echo "Waiting for initialization..."
+      sleep 60
+
+      while [[ `cat /minecraft/data/logs/latest.log | grep "Can't keep up!"` == "" ]]; do
+        echo "...Waiting more..."
+        sleep 10
+      done
+
+    fi
 
   fi
+
 }
 
 # First launch
 if [[ ! -f /minecraft/data/eula.txt ]]; then
 
-  # Copy plugins
-  mkdir /minecraft/data/plugins
-  cp -f /minecraft/downloads/plugins/*.jar /minecraft/data/plugins
+  # Copy minecraft binaries
+  if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
+    cp -f /minecraft/downloads/bin/werewolf/*.jar /minecraft/bin
+  else
+    cp -f /minecraft/downloads/bin/werewolf_uhc/*.jar /minecraft/bin
+  fi
 
   # Init plugins needed
   FIRST_LAUNCH=1
@@ -106,6 +161,9 @@ fi
 # Minecraft server session creation
 tmux new -s minecraft -c /minecraft/data -d
 
+# Plugins configuration
+init_plugins
+
 # Launching minecraft server
 tmux send-keys -t minecraft "java -jar /minecraft/bin/${binary}.jar nogui" C-m
 
@@ -114,10 +172,11 @@ trap stop INT
 trap stop TERM
 read < /tmp/FIFO &
 
-# Plugins configuration
-init_plugins
+# Waiting procedure
+waiting_available_server
 
 echo -e "\n*************************************************"
 echo "* Minecraft server operational..."
 echo "*************************************************"
+
 wait

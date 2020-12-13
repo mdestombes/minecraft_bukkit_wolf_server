@@ -6,6 +6,7 @@ MAINTAINER mdestombes
 # Configuration variables
 ENV SERVER_PORT=25565
 ENV MOTD="Welcome to Minecraft Werewolf"
+ENV WEREWOLF_MODE=1
 
 # Install dependencies
 RUN apk update &&\
@@ -16,16 +17,19 @@ RUN apk update &&\
         bash \
         python
 
-# Download last version
+# Download minecraft binaries
 # From 'https://getbukkit.org'
-WORKDIR /minecraft/downloads
-RUN wget -O /minecraft/downloads/craftbukkit.jar https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.16.4.jar
-RUN wget -O /minecraft/downloads/spigot.jar https://cdn.getbukkit.org/spigot/spigot-1.16.4.jar
+WORKDIR /minecraft/downloads/bin/werewolf_uhc
+RUN wget -O /minecraft/downloads/bin/werewolf_uhc/craftbukkit.jar https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.16.4.jar
+RUN wget -O /minecraft/downloads/bin/werewolf_uhc/spigot.jar https://cdn.getbukkit.org/spigot/spigot-1.16.4.jar
+WORKDIR /minecraft/downloads/bin/werewolf
+RUN wget -O /minecraft/downloads/bin/werewolf/craftbukkit.jar https://cdn.getbukkit.org/craftbukkit/craftbukkit-1.15.1.jar
+RUN wget -O /minecraft/downloads/bin/werewolf/spigot.jar https://cdn.getbukkit.org/spigot/spigot-1.15.1.jar
 
 # Copy Bukkit, Spigot and Plugins
-WORKDIR /minecraft/bin
-RUN cp /minecraft/downloads/craftbukkit.jar /minecraft/bin/craftbukkit.jar
-RUN cp /minecraft/downloads/spigot.jar /minecraft/bin/spigot.jar
+#WORKDIR /minecraft/bin
+#RUN cp /minecraft/downloads/craftbukkit.jar /minecraft/bin/craftbukkit.jar
+#RUN cp /minecraft/downloads/spigot.jar /minecraft/bin/spigot.jar
 
 # Expose needed port
 EXPOSE ${SERVER_PORT}
@@ -33,9 +37,13 @@ EXPOSE ${SERVER_PORT}
 # Copy plugins
 # Manualy downloaded from https://www.spigotmc.org (WGET Blocked)
 # https://www.spigotmc.org/resources/loup-garou-uhc-werewolf-uhc.73113/ (v1.6.1)
-COPY plugins/werewolfplugin.jar /minecraft/downloads/plugins/
+COPY plugins/werewolfplugin.jar /minecraft/downloads/plugins/werewolf_uhc/
 # https://www.spigotmc.org/resources/statistiks-for-loup-garou-uhc-werewolf-uhc.81472/ (v1.0)
-COPY plugins/Statistiks.jar /minecraft/downloads/plugins/
+COPY plugins/Statistiks.jar /minecraft/downloads/plugins/werewolf_uhc/
+# https://www.spigotmc.org/resources/loup-garou-squeezie.76251/ (v1.1.0)
+COPY plugins/LoupGarou.jar /minecraft/downloads/plugins/werewolf/
+# https://www.spigotmc.org/resources/protocollib.1997/ (v4.5.1)
+COPY plugins/ProtocolLib.jar /minecraft/downloads/plugins/werewolf/
 
 # Copy runner
 COPY run.sh /minecraft/bin/run.sh

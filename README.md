@@ -3,15 +3,24 @@
 __*Take care, `Last` version is often in dev. Use stable version with TAG*__
 
 Docker build for managing a Minecraft Bukkit/Spigot server based on Alpine with
-Werewolf module include.
+two Werewolf plugins include:
+- Loup Garou Squeezie
+- WereWolf UHC
 
-This image is borrowed from bbriggs/bukkit functionalities.
-Thanks for this good base of Dockerfile and existing structure.
+This image is based on mdestombes/minecraft_bukkit_server functionalities.
 
 Plugins are manualy download and updated to git repository from
     https://www.spigotmc.org (WGET Blocked) 
 
 This image uses [GetBukkit](https://getbukkit.org) to manage a Minecraft server.
+
+Take care, each plugin need to work with different minecraft binary version as:
+- Loup Garou Squeezie 1.1.0
+  + Minecraft Spigot 1.15.1
+- WereWolf UHC 1.6.1
+  + Minecraft Spigot 1.16.4
+
+The docker image manage this difference.
 
 ---
 
@@ -25,13 +34,28 @@ This image uses [GetBukkit](https://getbukkit.org) to manage a Minecraft server.
 
 ## Variables
 
+### Werewolf mode selection
+
+In this image there is two available plugins with their dependencies.
+To make your selection, pass pass the `WEREWOLF_MODE` environment variable to
+Docker with the correct value when running the container.
+
+| Environment Variable              | Default                  |
+|-----------------------------------|--------------------------|
+| WEREWOLF_MODE                     | `1`                      |
+
+- Mode __1__ => Activate `Loup Garou Squeezie` plugin and their dependencies
+- Mode __2__ => Activate plugin `WereWolf UHC` plugin and their dependencies
+
+### Minecraft properties
+
 A full list of `server.properties` settings and their corresponding environment
 variables is included below, along with their defaults:
 
 | Configuration Option              | Environment Variable          | Default                  |
 | ----------------------------------|-------------------------------|--------------------------|
 | allow-flight                      | ALLOW_FLIGHT                  | `false`                  |
-| allow-nether                      | ALLOW_NETHER                  | `true`                   |
+| allow-nether                      | ALLOW_NETHER                  | `false`                  |
 | broadcast-console-to-ops          | BROADCAST_OPS                 | `true`                   |
 | broadcast-rcon-to-ops             | BROADCAST_OPS                 | `true`                   |
 | debug                             | DEBUG                         | `false`                  |
@@ -160,6 +184,32 @@ After => `docker stop -t 70 minecraf_server`
 
 ---
 
+## Server initialization
+
+### Werewolf Squeezie
+
+Special attention, initialization of the server with this plugin is in multiple
+step, as:
+- First launch => Initialization of map, selection of base place
+  (Without plugin)
+- Second launch => Installation of plugin, gaming
+- Further launch => Only gaming
+
+__/!\ Please note, after installing the plugin, you are no longer able to
+ modify the map /!\\__
+
+To know how to use the plugin, refer to the original plugin documentation as:
+[WereWolf Squeezy](https://www.spigotmc.org/resources/loup-garou-squeezie.76251/)
+
+### Werewolf UHC
+
+This server is available start from the first launch.
+
+To know how to use the plugin, refer to the original plugin documentation as:
+[WereWolf UHC](https://www.spigotmc.org/resources/loup-garou-uhc-werewolf-uhc.73113/)
+
+---
+
 ## Important point in available volumes
 + __/minecraft/data__: Working data directory wich contains:
   + /minecraft/data/logs: Logs directory
@@ -179,10 +229,13 @@ After => `docker stop -t 70 minecraf_server`
 
 ## Changelog
 
-| Tag      | Notes                                                 |
-|----------|-------------------------------------------------------|
-| `1.0`    | -> Initialization                                     |
-|          | -> Minecraft 1.16.4                                   |
-|          | -> werewolf-uhc 1.6.1                                 |
-|          | -> statistiks-for-werewolf-uhc 1.0                    |
-|          |                                                       |
+| Tag      | Notes                                                              |
+|----------|--------------------------------------------------------------------|
+| `1.0`    | -> Initialization                                                  |
+|          | -> Minecraft 1.16.4                                                |
+|          | -> werewolf-uhc 1.6.1                                              |
+|          | -> statistiks-for-werewolf-uhc 1.0                                 |
+|          |                                                                    |
+| `2.0`    | -> Minecraft binaries management (2 distinct revision)             |
+|          | -> Multiple plugins management (Loup Garou Squeezie, werewolf-uhc) |
+|          |                                                                    |
