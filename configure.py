@@ -30,7 +30,7 @@ def config_file():
         "allow-flight": os.getenv(
             "ALLOW_FLIGHT", "false"),
         "allow-nether": os.getenv(
-            "ALLOW_NETHER", "true"),
+            "ALLOW_NETHER", "false"),
         "broadcast-console-to-ops": os.getenv(
             "BROADCAST_OPS", "true"),
         "broadcast-rcon-to-ops": os.getenv(
