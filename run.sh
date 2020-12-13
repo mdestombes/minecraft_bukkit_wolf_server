@@ -46,11 +46,37 @@ function stop {
 function init_plugins {
 
   # Copy plugins if selected mod active and not already copied
-  if ! [[ ${WEREWOLF_MODE} -eq 1 ||
-          -f /minecraft/data/plugin_installed ]]; then
-    mkdir /minecraft/data/plugins
-    cp -f /minecraft/downloads/plugins/werewolf_uhc/*.jar /minecraft/data/plugins
-    touch /minecraft/data/plugin_installed
+  if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
+    echo -e "\n*************************************************"
+    echo "* Werewolf Squeezie management..."
+    echo "*************************************************"
+
+    if ! [[ ${FIRST_LAUNCH} -eq 1 || -f /minecraft/data/plugin_installed ]]; then
+      echo "Copy plugin..."
+      cp -f /minecraft/downloads/plugins/werewolf/*.jar /minecraft/data/plugins
+      touch /minecraft/data/plugin_installed
+
+    else
+      echo "Nothing to do!"
+
+    fi
+
+  else
+    echo -e "\n*************************************************"
+    echo "* Werewolf UHC management..."
+    echo "*************************************************"
+
+    if ! [[ -f /minecraft/data/plugin_installed ]]; then
+      echo "Copy plugin..."
+      mkdir /minecraft/data/plugins
+      cp -f /minecraft/downloads/plugins/werewolf_uhc/*.jar /minecraft/data/plugins
+      touch /minecraft/data/plugin_installed
+
+    else
+      echo "Nothing to do!"
+
+    fi
+
   fi
 
 }
@@ -59,11 +85,11 @@ function init_plugins {
 function waiting_available_server {
 
   if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
+    echo -e "\n*************************************************"
+    echo "* Launching Minecraft server with Werewolf Squeezie..."
+    echo "*************************************************"
 
     if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
-      echo -e "\n*************************************************"
-      echo "* Specific configuration of Minecraft server with Werewolf Squeezie..."
-      echo "*************************************************"
       echo "Waiting for first initialization..."
       sleep 40
 
@@ -73,15 +99,6 @@ function waiting_available_server {
       done
 
     else
-      # Copy plugins if not already copied
-      if ! [[ -f /minecraft/data/plugin_installed ]]; then
-        cp -f /minecraft/downloads/plugins/werewolf/*.jar /minecraft/data/plugins
-        touch /minecraft/data/plugin_installed
-      fi
-
-      echo -e "\n*************************************************"
-      echo "* Launching Minecraft server with Werewolf Squeezie..."
-      echo "*************************************************"
       echo "Waiting for initialization..."
       sleep 40
 
@@ -93,11 +110,11 @@ function waiting_available_server {
     fi
 
   else
+    echo -e "\n*************************************************"
+    echo "* Launching Minecraft server with Werewolf UHC..."
+    echo "*************************************************"
 
     if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
-      echo -e "\n*************************************************"
-      echo "* Specific configuration of Minecraft server with Werewolf UHC..."
-      echo "*************************************************"
       echo "Waiting for first initialization..."
       sleep 60
 
@@ -107,9 +124,6 @@ function waiting_available_server {
       done
 
     else
-      echo -e "\n*************************************************"
-      echo "* Launching Minecraft server with Werewolf UHC..."
-      echo "*************************************************"
       echo "Waiting for initialization..."
       sleep 60
 
