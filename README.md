@@ -169,18 +169,24 @@ directory when starting the container by using the `-v` option.
 ### Stopping container
 
 To stop the server:
-- More than 70 should be needed at first running. 90 seconds set to internal
-stop running process, to avoid lost data.
-- More than 40 should be needed at other running. 60 seconds set to internal
-stop running process, to avoid lost data.
+- Werewolf Squeezie
+  - More than 5 should be needed at each running. 10 seconds set to internal
+    stop running process, to avoid lost data.
+- Werewolf UHC
+  - More than 70 should be needed at first running. 90 seconds set to internal
+    stop running process, to avoid lost data.
+  - More than 40 should be needed at other running. 60 seconds set to internal
+    stop running process, to avoid lost data.
 
 /!\ The default timeout of command `stop` from docker command is 10 second.
 
 That's why I highly recommend to use the following parameter to use the `stop`
 command :
-
-First => `docker stop -t 100 minecraf_server`
-After => `docker stop -t 70 minecraf_server`
+- Werewolf Squeezie
+  - Al the time => `docker stop -t 15 minecraf_server`
+- Werewolf UHC
+  - First => `docker stop -t 100 minecraf_server`
+  - After => `docker stop -t 70 minecraf_server`
 
 ---
 
@@ -199,7 +205,7 @@ __/!\ Please note, after installing the plugin, you are no longer able to
  modify the map /!\\__
 
 To know how to use the plugin, refer to the original plugin documentation as:
-[WereWolf Squeezy](https://www.spigotmc.org/resources/loup-garou-squeezie.76251/)
+[WereWolf Squeezie](https://www.spigotmc.org/resources/loup-garou-squeezie.76251/)
 
 ### Werewolf UHC
 
