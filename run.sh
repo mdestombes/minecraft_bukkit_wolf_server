@@ -23,15 +23,24 @@ function stop {
   # Stopping minecraft server
   tmux send-keys -t minecraft "stop" C-m
 
-  echo -e "\n*************************************************"
-  echo "* Minecraft server stopping"
-  echo "*************************************************"
-
-  if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
-    sleep 90
+  if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
+    echo -e "\n*************************************************"
+    echo "* Minecraft server with Werewolf Squeezy stopping"
+    echo "*************************************************"
+    sleep 10
 
   else
-    sleep 60
+    echo -e "\n*************************************************"
+    echo "* Minecraft server with Werewolf UHC stopping"
+    echo "*************************************************"
+
+    if [[ ${FIRST_LAUNCH} -eq 1 ]]; then
+      sleep 90
+
+    else
+      sleep 60
+
+    fi
 
   fi
 
