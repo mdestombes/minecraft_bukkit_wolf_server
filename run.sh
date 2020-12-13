@@ -25,7 +25,7 @@ function stop {
 
   if [[ ${WEREWOLF_MODE} -eq 1 ]]; then
     echo -e "\n*************************************************"
-    echo "* Minecraft server with Werewolf Squeezy stopping"
+    echo "* Minecraft server with Werewolf Squeezie stopping"
     echo "*************************************************"
     sleep 10
 
@@ -61,7 +61,7 @@ function init_plugins {
     echo "*************************************************"
 
     if ! [[ ${FIRST_LAUNCH} -eq 1 || -f /minecraft/data/plugin_installed ]]; then
-      echo "Copy plugin..."
+      echo "Copy plugins..."
       cp -f /minecraft/downloads/plugins/werewolf/*.jar /minecraft/data/plugins
       touch /minecraft/data/plugin_installed
 
@@ -76,7 +76,7 @@ function init_plugins {
     echo "*************************************************"
 
     if ! [[ -f /minecraft/data/plugin_installed ]]; then
-      echo "Copy plugin..."
+      echo "Copy plugins..."
       mkdir /minecraft/data/plugins
       cp -f /minecraft/downloads/plugins/werewolf_uhc/*.jar /minecraft/data/plugins
       touch /minecraft/data/plugin_installed
